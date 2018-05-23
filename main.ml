@@ -9,7 +9,7 @@ let step command stack element = match command, stack, element with
 | MUL, v1::v2 -> []
 | DIV, v1::v2 -> []
 | REM, v1::v2 -> []
-| REM, [] -> failwith "error"
+| REM, [] -> failwith "error"ddd
 | DIV, [] -> failwith "error"
 | MUL, [] -> failwith "error"
 | SUB, [] -> failwith "error"
