@@ -1,0 +1,8 @@
+### Starting build.
+# Target: Main.ml.depends, tags: { debug, explain, extension:ml, file:Main.ml, my_warnings, ocaml, ocamldep, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamldep -modules Main.ml > Main.ml.depends
+# Target: Main.cmo, tags: { byte, compile, debug, explain, extension:cmo, extension:ml, file:Main.cmo, file:Main.ml, implem, my_warnings, ocaml, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamlc -c -g -safe-string -w a -I expressions -I utils -o Main.cmo Main.ml
+# Target: Main.byte, tags: { byte, debug, dont_link_with, explain, extension:byte, file:Main.byte, link, my_warnings, ocaml, program, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamlc -g Main.cmo -o Main.byte
+# Compilation successful.

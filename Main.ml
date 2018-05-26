@@ -15,39 +15,6 @@ let compile file =
 (* let _ = Arg.parse [] compile "" *)
 
 
-type command = 
-    | PUSH of int | POP | SWAP | ADD | SUB | MUL | DIV | REM ;;
-
-(* question 2.5 *)
-
-let max_int = 10000000000 ;;
-
-let step command stack = match command,stack with
-    | POP, [] -> failwith "stack is empty"
-    | POP, x::s -> s,x 
-    | SWAP, [] -> [],max_int
-    | SWAP, x::[] -> stack,max_int
-    | SWAP, x1::x2::s -> x2::x1::s,max_int
-    | PUSH(e), s -> e::s, max_int
-    | ADD, x1::x2::s -> (x1+x2)::s, max_int
-    | ADD, _ -> failwith "stack too short"
-    | SUB, x1::x2::s -> (x1-x2)::s, max_int
-    | SUB, _ -> failwith "stack too short"
-    | MUL, x1::x2::s -> (x1*x2)::s, max_int
-    | MUL, _ -> failwith "stack too short"
-    | DIV, x1::0::s -> failwith "math error"
-    | DIV, x1::x2::s -> (x1/x2)::s, max_int
-    | DIV, _ -> failwith "stack too short"
-    | REM, x1::0::s -> failwith "math error"
-    | REM, x1::x2::s -> (x1 mod x2)::s, max_int
-    | REM, _ -> failwith "stack too short";;
 
 
-let rec print_list = function 
-[] -> ()
-| e::l -> print_int e ; print_string " " ; print_list l ;;
 
-(*Test*)
-let st = 10::0::3::74::[];; (*stack initielle*)
-let res_list, l = (step ADD st);;
-print_char '\n'; print_list res_list ; print_char '\n'; print_char '\n';;

@@ -1,0 +1,9 @@
+#the following line can be extended by adding "or <directory_name>" if you organize your files with sudirectories
+<expressions> or <utils>: include
+<*>: my_warnings
+true: warn_a
+true: safe_string
+true: debug
+# use of menhir
+true: use_menhir
+true: explain
