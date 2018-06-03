@@ -1,6 +1,3 @@
-NB : pour faire ø : alt gr + o
-
-
 
 
 ## Exercice 1
@@ -70,14 +67,14 @@ Le comportement lorsque la pile est vide. Que se passe-t-il s'il y a plus d'inst
      pop.Q,S -> ERR
 ```
 ### question 2.4
-
+```
 type command = 
     | PUSH of int | POP | SWAP | ADD | SUB | MUL | DIV | REM ;;
-
+```
 ### question 2.5
 
 
-
+```
 let max_int = 10000000000 ;;
 
 let step command stack = match command,stack with
@@ -98,7 +95,7 @@ let rec print_list = function
 let stack = [];;
 let liste,x = step POP stack in
 print_int x ;;
-
+```
 
 
 
@@ -115,7 +112,7 @@ print_int x ;;
 
 * Description formelle : 
 Notons E la fonction d'environnement qui associe la valeur d'une
-1. E-| Const i -> PUSH i 
+1. ` E-| Const i -> PUSH i `
 2.
 ```   
        x € dom(E)
@@ -137,3 +134,116 @@ Notons E la fonction d'environnement qui associe la valeur d'une
 ```
 
 ### question 3.2
+
+```
+let rec eval env exp = match exp with
+  | Const c -> c
+  | Var v -> (try List.assoc v env with Not_found -> raise(Unbound_variable v))
+  ;;
+
+let generate_binop bop = match bop with
+  | '+' -> "ADD"
+  | '-' -> "SUB"
+  | '*' -> "MUL"
+  | '/' -> "DIV"
+  | '%' -> "REM" ;;
+
+let generate env expression = match expression with
+  | Const c -> "PUSH"^(eval expression)
+  | Var v -> "PUSH"^(eval env expression)
+  | Binop(op,e1,e2) -> (generate env e1)^(generate env e2)^(generate_binop op)
+  | Uminus e -> "PUSH0"^"PUSH1"^"SUB"^"PUSH"^(generate env e)^"MUL" ;;
+  ```
+
+
+## exercice 4
+
+### question 4.1
+
+```
+{
+ 
+type token =
+  | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM | EOF
+  | INT of int | IDENT of string ;;
+let mk_int nb =
+ try INT (int_of_string nb)
+ with Failure _ -> failwith (Printf.sprintf "Illegal integer '%s': " nb) ;;
+
+let string_of_token token = match token with
+  | PUSH -> " PUSH "
+  | POP -> " POP "
+  | SWAP -> " SWAP "
+  | ADD -> " ADD "
+  | SUB -> " SUB "
+  | MUL -> " MUL "
+  | DIV ->  " DIV "
+  | REM -> " REM "
+  | EOF -> " EOF "
+  | INT n -> string_of_int n
+  | IDENT s -> s;;
+}
+let newline = (['\n' '\r'] | "\r\n")
+let blank = [' ' '\014' '\t' '\012']
+let digit = ['0'-'9']
+let letter = ['a'-'z' 'A'-'Z']
+let linecomment = "(*" [^ '\n' '\r']* "*)"
+let binop = "add"|"sub"|"mul"|"div"
+
+
+rule token = parse
+
+ (*new lines*)
+ | newline+ {token lexbuf}
+
+ (*blanks*)
+ | blank+ {token lexbuf}
+
+ (* integers*)
+ | digit+ as nb {mk_int nb}
+ 
+ (*commands*)
+ | "push" { PUSH }
+ | "pop"  { POP }
+ | "swap" { SWAP }
+ | "add"  { ADD }
+ | "sub"  { SUB }
+ | "mul"  { MUL }
+ | "div"  { DIV }
+ | "rem"  { REM }
+
+ (*identifiers*)
+ | letter (letter | digit | '_')* as var { IDENT var }
+
+ (*end of file*)
+ | eof { EOF }
+
+ (*illegal characters*)
+ | _ as c { failwith (Printf.sprintf "Illegal character '%c': " c)}
+```
+
+### question 4.2
+
+```
+open PfxLexer ;;
+
+let compile file =
+  print_string ("File "^file^" is being treated!\n");
+  try
+    let input_file = open_in file in
+    let lexbuf = Lexing.from_channel input_file in
+    begin
+      while not lexbuf.lex_eof_reached do
+        print_string (string_of_token(token lexbuf)^"\n") ;
+      done;
+      print_string (string_of_token(token lexbuf)^"\n") (* to print the end of file*);
+      close_in (input_file)
+    end
+  with Sys_error s ->
+    print_endline ("Can't find file '" ^ file ^ "'");;
+```
+
+
+## Exercie 5
+
+### question 5.1
