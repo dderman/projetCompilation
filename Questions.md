@@ -247,3 +247,55 @@ let compile file =
 ## Exercie 5
 
 ### question 5.1
+
+* Modifications dans pfxLexer.mll :
+
+```
+{...
+  let mk_int nb lexbuf =
+    try INT (int_of_string nb)
+    with Failure _ -> 
+        let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal integer '%s'\n " nb in
+        raise (LexingII.Error (msg,loc))
+...}
+rule token = parse
+...
+ (*new lines*)
+ | newline {Newline   (* | newline+ {token lexbuf}*)}
+...
+ (* integers*)
+ | digit+ as nb {mk_int nb lexbuf}
+...
+ (*illegal characters*)
+ | _ as c { let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal character '%c'\n" c in 
+      raise (LexingII.Error(msg, loc))}
+```
+
+* Modifications dans main.ml :
+
+```
+let compile file =
+  print_string ("File "^file^" is being treated!\n");
+  try
+    let input_file = open_in file in
+    let lexbuf = Lexing.from_channel input_file in
+    begin
+      Location.init lexbuf file ;
+      while not lexbuf.lex_eof_reached do
+        try
+          let tok = token lexbuf in
+          print_string (string_of_token(tok)^"\n") ;
+          if tok = Newline then
+            Location.incr_line lexbuf ;
+        with
+          (* To tell the user where the error is, whenever an there is an error. *)
+          | LexingII.Error(msg,loc) ->  
+              Location.print loc ; 
+              print_string msg ;
+              lexbuf.lex_eof_reached <- true (*to end the process*)
+      done;
+      close_in (input_file)
+    end
+  with Sys_error s ->
+    print_endline ("Can't find file '" ^ file ^ "'");;
+```

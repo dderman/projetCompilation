@@ -2,7 +2,7 @@
 type expression =
   | Const of int
   | Var of string
-  | Binop of BinOp.t * expression * expression
+  | Binop of char * expression * expression (*of Binop.t * expression * expression*)
   | Uminus of expression ;;
 
 let rec string_of_expr exp =

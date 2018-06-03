@@ -69,5 +69,5 @@ let print loc =
       print_string " character ";
       print_int (fin.pos_cnum - fin.pos_bol)
     end;
-  print_endline ":\n"
+  print_endline ":"
 

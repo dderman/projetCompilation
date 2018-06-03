@@ -2,13 +2,11 @@
  named compile, it is the function provided after question 4.1 *)
 
 open PfxLexer ;;
-open Location ;;
-open LexingII ;;
 
 (*(* To tell the user where the error is, whenever an there is an error. *)
 let position = 
 
-let error = Error("Illegal character",position) in
+let error = LexingII.Error("Illegal character",position) in
 failwith(fst(error)^" at "^snd(error))*)
 
 let compile file =
@@ -17,18 +15,17 @@ let compile file =
     let input_file = open_in file in
     let lexbuf = Lexing.from_channel input_file in
     begin
+    	Location.init lexbuf file ;
     	while not lexbuf.lex_eof_reached do
-    		(*try*)
-    		let tok = token lexbuf in
-    		  print_int(lexbuf.lex_start_p.pos_lnum);
-    		  print_string ("\n"^string_of_token(tok)^"\n") ;
-    		  Location.print lexbuf.lex_start_p ;
+    		try
+    			let tok = token lexbuf in
+    		  print_string (string_of_token(tok)^"\n") ;
     		  if tok = Newline then
     		  	Location.incr_line lexbuf ;
-
-    		(*with
-    		  | Error(str,loc) -> print_string(str^" from characters "^string_of_int loc.loc_start.pos_bol^" to "^string_of_int loc.loc_end.pos_bol^" in line "^) *)
-
+    		with
+    		  | LexingII.Error(msg,loc) ->  Location.print loc ; 
+    		  															print_string msg ;
+    		  															lexbuf.lex_eof_reached <- true (*to end the process*)
     	done;
     	close_in (input_file)
     end
