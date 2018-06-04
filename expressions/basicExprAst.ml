@@ -1,8 +1,10 @@
 (* This is the snippet of code provided before question 3.1 *)
+open BinOp ;;
+
 type expression =
   | Const of int
   | Var of string
-  | Binop of char * expression * expression (*of Binop.t * expression * expression*)
+  | Binop of Binop.t * expression * expression 
   | Uminus of expression ;;
 
 let rec string_of_expr exp =
@@ -10,7 +12,7 @@ let rec string_of_expr exp =
   | Const c -> string_of_int c
   | Var v -> v
   | Binop(op,e1,e2) -> op^(string_of_expr e1)^(string_of_expr e2)
-  | Uminus e -> "Uminus"^(string_of_expr e) ;;
+  | Uminus e -> "UMINUS"^(string_of_expr e) ;;
 
 let rec eval env exp = match exp with
 	| Const c -> c
@@ -18,14 +20,14 @@ let rec eval env exp = match exp with
 	;;
 
 let generate_binop bop = match bop with
-	| '+' -> "ADD"
-	| '-' -> "SUB"
-	| '*' -> "MUL"
-	| '/' -> "DIV"
-	| '%' -> "REM" ;;
+	| Badd -> "ADD"
+	| Bsub -> "SUB"
+	| Bmul -> "MUL"
+	| Bdiv -> "DIV"
+	| Bmod -> "REM" ;;
 
 let generate env expression = match expression with
 	| Const c -> "PUSH"^(eval expression)
 	| Var v -> "PUSH"^(eval env expression)
 	| Binop(op,e1,e2) -> (generate env e1)^(generate env e2)^(generate_binop op)
-	| Uminus e -> "PUSH0"^"PUSH1"^"SUB"^"PUSH"^(generate env e)^"MUL" ;;
+	| Uminus e -> "PUSH0"^"PUSH"^(generate env e)^"SUB" ;;

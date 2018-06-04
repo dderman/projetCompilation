@@ -8,8 +8,12 @@
 (**************
  * The tokens *
  **************)
-
-(% enter tokens here, they should begin with %token *)
+type token =
+  
+  | INT of int | IDENT of string;;
+%token EOF PUSH POP SWAP ADD SUB MUL DIV REM
+%token <int> INT
+%token <string> IDENT
 
 (******************************
  * Entry points of the parser *

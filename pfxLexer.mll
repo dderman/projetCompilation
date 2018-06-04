@@ -6,24 +6,33 @@ type token =
 let mk_int nb lexbuf =
  try INT (int_of_string nb)
  with Failure _ -> 
- 				let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal integer '%s'\n " nb in
- 				raise (LexingII.Error (msg,loc))
- 				(*failwith (Printf.sprintf "Illegal integer '%s': " nb)*) ;;
+                let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal integer '%s'\n " nb in
+                raise (LexingII.Error (msg,loc))
+                (*failwith (Printf.sprintf "Illegal integer '%s': " nb)*) ;;
 
 let string_of_token token = match token with
-	| PUSH -> " PUSH "
-	| POP -> " POP "
-	| SWAP -> " SWAP "
-	| ADD -> " ADD "
-	| SUB -> " SUB "
-	| MUL -> " MUL "
-	| DIV ->  " DIV "
-	| REM -> " REM "
-	| EOF -> " EOF "
-  	| INT n -> string_of_int n
-  	| IDENT s -> s
-  	| Newline -> " newline "
-  	| RESULT s -> s;;
+    | PUSH -> " PUSH "
+    | POP -> " POP "
+    | SWAP -> " SWAP "
+    | ADD -> " ADD "
+    | SUB -> " SUB "
+    | MUL -> " MUL "
+    | DIV ->  " DIV "
+    | REM -> " REM "
+    | EOF -> " EOF"
+    | INT n -> string_of_int n
+    | IDENT s -> s
+    | Newline -> " newline "
+    | RESULT s -> s;;
+
+
+(*a function to increment the line number in the lexing buffer
+  when meeting a newline and to pass directly to the following token*)
+let handle_newline f lexbuf =
+    Location.incr_line lexbuf ;
+    f lexbuf ;;
+
+
 }
 let newline = (['\n' '\r'] | "\r\n")
 let blank = [' ' '\014' '\t' '\012']
@@ -34,11 +43,12 @@ let result = "--" [^ '\n' '\r']*
 let binop = "add"|"sub"|"mul"|"div"
 
 
+
 rule token = parse
 
  (*new lines*)
- | newline {Newline   (* | newline+ {token lexbuf}*)}
- 	
+ | newline {handle_newline token lexbuf  (* | newline+ {token lexbuf}*)}
+    
 
  (*blanks*)
  | blank+ {token lexbuf}
@@ -48,9 +58,6 @@ rule token = parse
  
  (*comments*)
  | linecomment {token lexbuf}
-
- (*expected result when given*)
- | result as res {RESULT res}
 
  (*commands*)
  | "push" { PUSH }
@@ -65,12 +72,16 @@ rule token = parse
  (*identifiers*)
  | letter (letter | digit | '_')* as var { IDENT var }
 
+ (*expected result when given*)
+ | result {token lexbuf}
+ (*| result as res {RESULT res}*) 
+
  (*end of file*)
  | eof { EOF }
 
  (*illegal characters*)
  | _ as c { let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal character '%c'\n" c in 
- 			raise (LexingII.Error(msg, loc))
- 	 (*failwith (Printf.sprintf "Illegal character '%c': " c)*)}
+            raise (LexingII.Error(msg, loc))
+     (*failwith (Printf.sprintf "Illegal character '%c': " c)*)}
 
 

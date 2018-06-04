@@ -14,8 +14,8 @@ let compile file =
     		try
     			let tok = token lexbuf in
     		  print_string (string_of_token(tok)^"\n") ;
-    		  if tok = Newline then
-    		  	Location.incr_line lexbuf ;
+    		  if tok = EOF then
+    		  lexbuf.lex_eof_reached <- true ;
     		with
     			(* To tell the user where the error is, whenever an there is an error. *)
     		  | LexingII.Error(msg,loc) ->  Location.print loc ; 

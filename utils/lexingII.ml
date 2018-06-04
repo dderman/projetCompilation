@@ -5,9 +5,9 @@ exception Recurse
 
 let string_of_buffer buffer =
   Printf.sprintf
-    "buffer len %i abs %i start_pos %i curr_pos %i last_pos %i start %i current %i"
+    "buffer len %i abs %i start_pos %i curr_pos %i last_pos %i start %i current %i eof_reached %b"
     buffer.lex_buffer_len buffer.lex_abs_pos buffer.lex_start_pos buffer.lex_curr_pos
-    buffer.lex_last_pos (buffer.lex_start_p.pos_cnum) (buffer.lex_curr_p.pos_cnum)
+    buffer.lex_last_pos (buffer.lex_start_p.pos_cnum) (buffer.lex_curr_p.pos_cnum) buffer.lex_eof_reached
 
 let step_back buffer =
   buffer.lex_curr_p <- { buffer.lex_curr_p with pos_cnum = buffer.lex_curr_p.pos_cnum - 1; } ;
