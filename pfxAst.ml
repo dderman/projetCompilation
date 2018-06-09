@@ -17,3 +17,19 @@ let rec string_of_program prog = match prog with
 | SUB::pgm -> "sub, "^string_of_program pgm
 | MUL::pgm -> "mul, "^string_of_program pgm
 | DIV::pgm -> "div, "^string_of_program pgm
+
+
+(* function to print the pfx AST *)
+let generate prog =
+	let rec generate_aux p = match p with
+		| [] -> "[]"
+		| PUSH(n)::pgm -> "  push("^(string_of_int n)^") \n    |    \n"^generate_aux pgm
+		| POP::pgm -> "  pop\n    |    \n"^generate_aux pgm
+		| REM::pgm -> "  rem\n    |    \n"^generate_aux pgm
+		| ADD::pgm -> "  add\n    |    \n"^generate_aux pgm
+		| SWAP::pgm -> "  swap\n    |    \n"^generate_aux pgm
+		| SUB::pgm -> "  sub\n    |    \n"^generate_aux pgm
+		| MUL::pgm -> "  mul\n    |    \n "^generate_aux pgm
+		| DIV::pgm -> "  div\n    |    \n"^generate_aux pgm
+	in print_string (generate_aux prog)
+ 
