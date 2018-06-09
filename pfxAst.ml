@@ -1,4 +1,5 @@
-type command = 
+type command = (*après discussion avec Grégoire, ne pas mettre de push of int. Il avait raison pour la structure linéaire.
+			Mais comment gérer le fait d'avoir des arguments ?! *)
 	| PUSH of int  | Ucomm of uCommand | Bcomm of bCommand
 type uCommand = POP | REM
 type bCommand = ADD | SWAP | SUB | MUL | DIV
