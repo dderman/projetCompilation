@@ -1,6 +1,5 @@
 %{
-  open basicExprAst
-  open functionExprAst
+  open PfxAst
   (* Ocaml code here*)
 
 %}
@@ -8,39 +7,32 @@
 (**************
  * The tokens *
  **************)
-type token =
-  
-  | INT of int | IDENT of string;;
 %token EOF PUSH POP SWAP ADD SUB MUL DIV REM
 %token <int> INT
-%token <string> IDENT
+
 
 (******************************
  * Entry points of the parser *
  ******************************)
 
-%start < basicExprAst.expression > expression
+%start < PfxAst.program > program
 %%
-pfx: pgm=expr EOF { pgm }
-expression:
- | e = expr EOF   { e }
-expr:
- | e PUSH = expr PUSH { e push }
- | MINUS e=expr %prec UMINUS { Uminus e }
- | e1=expr op=bop e2=expr { Binop(op,e1,e2)}
- | id=IDENT               { Var id }
- | i = int                { Const i }
-(*swap and pop*)
-%inline bop:
- | SUB  { Bsub }   
- | ADD  { Badd }  
- | MUL  { Bmul }  
- | DIV  { Bdiv }  
- | REM  { Bmod }             
 
 (*************
  * The rules *
  *************)
 
-(* list all rules composing your grammar; obviously your entry point has to be present *)
+program:
+ | p=pgm EOF   { p::[] }
+
+pgm:
+ | PUSH n=INT p=pgm { Push(n)::p }
+ | POP p=pgm { Pop::p }
+ | SWAP p=pgm { Swap::p }
+ | ADD p=pgm  { Add::p }
+ | SUB p=pgm {Sub::p}
+ | MUL p=pgm {Mul::p}
+ | DIV p=pgm {Div::p} 
+ | REM p=pgm {Rem::p}             
+
 

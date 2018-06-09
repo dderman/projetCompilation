@@ -1,7 +1,7 @@
 {
 type token =
   | Newline | PUSH | POP | SWAP | ADD | SUB | MUL | DIV | REM | EOF
-  | INT of int | IDENT of string | RESULT of string;;
+  | INT of int | RESULT of string;;
 
 let mk_int nb lexbuf =
  try INT (int_of_string nb)
@@ -21,7 +21,6 @@ let string_of_token token = match token with
     | REM -> " REM "
     | EOF -> " EOF"
     | INT n -> string_of_int n
-    | IDENT s -> s
     | Newline -> " newline "
     | RESULT s -> s;;
 
@@ -68,9 +67,6 @@ rule token = parse
  | "mul"  { MUL }
  | "div"  { DIV }
  | "rem"  { REM }
-
- (*identifiers*)
- | letter (letter | digit | '_')* as var { IDENT var }
 
  (*expected result when given*)
  | result {token lexbuf}
