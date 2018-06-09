@@ -1,2 +1,20 @@
 ### Starting build.
+# Target: pfxParser.mly.depends, tags: { debug, explain, extension:mly, file:pfxParser.mly, infer, menhir_ocamldep, my_warnings, ocaml, ocamldep, quiet, safe_string, traverse, use_menhir, warn_a }
+menhir --raw-depend --ocamldep '/usr/bin/ocamldep -modules' pfxParser.mly > pfxParser.mly.depends # cached
+# Target: pfxAst.ml.depends, tags: { debug, explain, extension:ml, file:pfxAst.ml, my_warnings, ocaml, ocamldep, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamldep -modules pfxAst.ml > pfxAst.ml.depends
+# Target: pfxAst.cmo, tags: { byte, compile, debug, explain, extension:cmo, extension:ml, file:pfxAst.cmo, file:pfxAst.ml, implem, my_warnings, ocaml, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamlc -c -g -safe-string -w a -I expressions -I utils -o pfxAst.cmo pfxAst.ml
+# Target: pfxParser.mly, tags: { byte, compile, debug, explain, extension:ml, extension:mly, file:pfxParser.ml, file:pfxParser.mly, infer, menhir, my_warnings, ocaml, parser, quiet, safe_string, traverse, use_menhir, warn_a }
+menhir --ocamlc '/usr/bin/ocamlc -g -safe-string -w a -I expressions -I utils' --explain --infer pfxParser.mly
+# Target: pfxParser.mli.depends, tags: { debug, explain, extension:mli, file:pfxParser.mli, my_warnings, ocaml, ocamldep, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamldep -modules pfxParser.mli > pfxParser.mli.depends
+# Target: pfxParser.cmi, tags: { byte, compile, debug, explain, extension:mli, file:pfxParser.mli, interf, my_warnings, ocaml, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamlc -c -g -safe-string -w a -I expressions -I utils -o pfxParser.cmi pfxParser.mli
+# Target: pfxParser.ml.depends, tags: { debug, explain, extension:ml, file:pfxParser.ml, my_warnings, ocaml, ocamldep, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamldep -modules pfxParser.ml > pfxParser.ml.depends
+# Target: pfxParser.cmo, tags: { byte, compile, debug, explain, extension:cmo, extension:ml, file:pfxParser.cmo, file:pfxParser.ml, implem, my_warnings, ocaml, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamlc -c -g -safe-string -w a -I expressions -I utils -o pfxParser.cmo pfxParser.ml
+# Target: pfxParser.byte, tags: { byte, debug, dont_link_with, explain, extension:byte, file:pfxParser.byte, link, my_warnings, ocaml, program, quiet, safe_string, traverse, use_menhir, warn_a }
+/usr/bin/ocamlc -g pfxAst.cmo pfxParser.cmo -o pfxParser.byte
 # Compilation successful.

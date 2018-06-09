@@ -2,7 +2,6 @@ type command = (*après discussion avec Grégoire, ne pas mettre de push of int.
 			Mais comment gérer le fait d'avoir des arguments ?! *)
 	| Push of int  | Pop | Rem | Add | Swap | Sub | Mul | Div
 
-
 type program = command list (* Nil | Prog of program * command *)
 
 (* add here all useful functions and types  related to the AST: for instance  string_of_ functions *)
