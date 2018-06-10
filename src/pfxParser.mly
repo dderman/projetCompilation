@@ -1,7 +1,5 @@
 %{
   open PfxAst
-  (* Ocaml code here*)
-
 %}
 
 (**************
@@ -11,9 +9,9 @@
 %token <int> INT
 
 
-(******************************
- * Entry points of the parser *
- ******************************)
+(*****************************
+ * Entry point of the parser *
+ *****************************)
 
 %start < PfxAst.program > program
 %%
@@ -24,8 +22,9 @@
 
 
 program:
- | INT pg=pgm {pg} (*INT for the number of arguments indicated at 
- 					 the beginning of the input file*)
+ | INT pg=pgm {pg} 
+ (*INT is for the number of arguments indicated at 
+ the beginning of the input file*)
 
 pgm:
  | PUSH n=INT p=pgm { (Push n)::p} 

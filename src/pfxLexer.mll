@@ -1,5 +1,4 @@
 {
-
   open PfxParser ;;
 
 (*type token =
@@ -10,8 +9,8 @@ let mk_int nb lexbuf =
  try INT (int_of_string nb)
  with Failure _ -> 
                 let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal integer '%s'\n " nb in
-                raise (LexingII.Error (msg,loc))
-                (*failwith (Printf.sprintf "Illegal integer '%s': " nb)*) ;;
+                raise (LexingII.Error (msg,loc)) 
+;;
 
 let string_of_token token = match token with
     | PUSH -> " PUSH "
@@ -32,7 +31,8 @@ let string_of_token token = match token with
   when meeting a newline and to pass directly to the following token*)
 let handle_newline f lexbuf =
     Location.incr_line lexbuf ;
-    f lexbuf ;;
+    f lexbuf 
+;;
 
 
 }
@@ -49,7 +49,7 @@ let binop = "add"|"sub"|"mul"|"div"
 rule token = parse
 
  (*new lines*)
- | newline {handle_newline token lexbuf  (* | newline+ {token lexbuf}*)}
+ | newline {handle_newline token lexbuf  (* newline+ {token lexbuf}*)}
     
 
  (*blanks*)
@@ -80,7 +80,6 @@ rule token = parse
 
  (*illegal characters*)
  | _ as c { let loc = Location.curr lexbuf and msg = Printf.sprintf "Illegal character '%c'\n" c in 
-            raise (LexingII.Error(msg, loc))
-     (*failwith (Printf.sprintf "Illegal character '%c': " c)*)}
+            raise (LexingII.Error(msg, loc))}
 
 

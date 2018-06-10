@@ -49,54 +49,39 @@ Structure of the project
 
 The project is organized as following:
 
-The master folder contains both the compiler and its source coide (main), as well as the parser and lexer (also menhir and ocamllex files as well as their generated code), and this README file.
+The master folder contains both the compiler and its source code (main), as well as the parser and lexer (also menhir and ocamllex files as well as their generated code), and this README file.
 The expressions folder contains the abstract syntax trees for the two most complex syntactic structures.
 The tests folder is quite self explanatory, contains examples as well as instructions to check their response appropriately.
 Finally, in the utils folder you can find the lexer utilities to find different tokens.
 
 file tree:
 
-projetCompilation
-├── pfxAst.ml
-├── pfxLexer.mll
-├── pfxParser.mly
-├── Questions.md
-├── main.ml
-├── main.byte
-├── _tags
-├── README
-├── _build
-│   ├── ...
-│   └── ...
-├── expressions
-│   ├── basicExprAst.ml
-│   └── functionExprAst.ml
-├── tests
-│   ├── ex_course1.pfx
-│   ├── ex_course.pfx
-│   ├── first.pfx
-│   ├── prog0.pfx
-│   ├── prog_1arg_0.pfx
-│   ├── prog_1arg_1.pfx
-│   ├── prog1.pfx
-│   ├── prog_2arg_0.pfx
-│   ├── prog2.pfx
-│   ├── prog_3arg_0.pfx
-│   ├── prog3.pfx
-│   ├── prog4.pfx
-│   ├── prog_5arg_0.pfx
-│   ├── prog5.pfx
-│   ├── README
-│   └── second.pfx
-└── utils
-    ├── a.out
-    ├── lexingII.ml
-    ├── lexingII.ml
-    ├── binOp.ml
-    ├── binOp.mli
-    ├── location.ml
-    └── location.mli
-
+RIVOAL-Samuel_DERMAN-Diego
+├── src
+│   ├── pfxAst.ml
+│   ├── pfxLexer.mll
+│   ├── pfxParser.mly
+│   ├── main.ml
+│   ├── _tags
+│   ├── README
+│   ├── expressions
+│   │   ├── basicExprAst.ml
+│   │   └── functionExprAst.ml
+│   ├── tests
+│   │   ├── error.pfx
+│   │   ├── errorbis.pfx
+│   │   ├── first.pfx
+│   │   ├── prog0.pfx
+│   │   └── README
+│   └── utils
+│       ├── lexingII.ml
+│       ├── lexingII.ml
+│       ├── binOp.ml
+│       ├── binOp.mli
+│       ├── location.ml
+│       └── location.mli 
+└── doc
+    └── Questions.md 
 ===============
 
 Progress
@@ -107,10 +92,17 @@ Progress
 
 ===============
 
-Know bugs and issues
+Known bugs and issues
 --------------------
 
-- 
+- none at this day
+
+===============
+
+Limitations
+--------------------
+
+- clearly, it is not a complete Pfx->EXPR compiler
 
 ===============
 
@@ -119,6 +111,8 @@ Helpful resources
 
 - We used the OCaml guide provided by https://realworldocaml.org/ in multiple instances to solve many problems.
 - We used all of the resources made available by the professors to get a step-by-step idea of what we were supposed to do.
+- https://stackoverflow.com was also helpful.
+- The ocaml section of the Inria site : the documentations of the different built-ins and the "une centaine de lignes de Caml" section.
 
 ===============
 
@@ -127,6 +121,6 @@ Difficulties
 
 - team programming: having to use a VCS such as git and avoiding conflicts
 - thinking functional
-- changing habits by using an unknown language
+- changing habits by using an unknown or forgotten language
 - getting feedback from moodle's forum and not from face to face meetings was quite disorienting 
-
+- finding where the useful informations were in this abundant documentation the professors provided us

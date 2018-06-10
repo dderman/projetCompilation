@@ -1,10 +1,11 @@
 
-(*Voir justification de cette implémentation pour le type program dans le fichier Questions.md.*)
+(*You can find a justification for the implementation of the type program in the file doc/Questions.md.*)
 type command = 
 	| Push of int  | Pop | Rem | Add | Swap | Sub | Mul | Div
 
 type program = command list
 
+(*a simple function that should print an object of type program*)
 let rec string_of_program prog = match prog with
 | [] -> "in empty stack."
 | Push(n)::pgm -> "push "^(string_of_int n)^", "^string_of_program pgm
@@ -17,7 +18,7 @@ let rec string_of_program prog = match prog with
 | Div::pgm -> "div, "^string_of_program pgm
 
 
-(* Fonction pour afficher un arbre syntaxique abstrait Pfx. *)
+(*a function that should to print a pfx AST*)
 let print_ast prog =
 	let rec print_aux p = match p with
 		| [] -> "   []\n"

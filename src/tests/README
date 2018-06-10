@@ -1,0 +1,10 @@
+Tests are composed of 4 Pfx programs organized as following:
+
+Basic Pfx:
+
+- error.pfx -> tests the handling of the error handling inappropriate characters
+
+- errorbis.pfx -> it was formely to test the handling of passing to a new line in the handling of the error described above when we wrote the Pfx lexer
+
+- first.pfx, prog0.pfx -> test the building and printing of Pfx ASTs
+
