@@ -21,14 +21,15 @@ let rec string_of_program prog = match prog with
 (* function to print the pfx AST *)
 let generate prog =
 	let rec generate_aux p = match p with
-		| [] -> "[]"
+		| [] -> "   []\n"
 		| Push(n)::pgm -> "  push("^(string_of_int n)^") \n    |    \n"^generate_aux pgm
-		| Pop::pgm -> "  pop\n    |    \n"^generate_aux pgm
-		| Rem::pgm -> "  rem\n    |    \n"^generate_aux pgm
-		| Add::pgm -> "  add\n    |    \n"^generate_aux pgm
-		| Swap::pgm -> "  swap\n    |    \n"^generate_aux pgm
-		| Sub::pgm -> "  sub\n    |    \n"^generate_aux pgm
-		| Mul::pgm -> "  mul\n    |    \n "^generate_aux pgm
-		| Div::pgm -> "  div\n    |    \n"^generate_aux pgm
-	in print_string (generate_aux prog)
+		| Pop::pgm -> "   pop\n    |    \n"^generate_aux pgm
+		| Rem::pgm -> "   rem\n    |    \n"^generate_aux pgm
+		| Add::pgm -> "   add\n    |    \n"^generate_aux pgm
+		| Swap::pgm -> "   swap\n    |    \n"^generate_aux pgm
+		| Sub::pgm -> "   sub\n    |    \n"^generate_aux pgm
+		| Mul::pgm -> "   mul\n    |    \n "^generate_aux pgm
+		| Div::pgm -> "   div\n    |    \n"^generate_aux pgm
+	in print_string("Pfx AST:\n");
+	print_string (generate_aux prog)
  

@@ -22,15 +22,21 @@
  * The rules *
  *************)
 
+
 program:
- | PUSH n=INT p=program { (Push n)::p} 
- | POP p=program { Pop::p }
- | SWAP p=program { Swap::p }
- | ADD p=program  { Add::p }
- | SUB p=program {Sub::p}
- | MUL p=program {Mul::p}
- | DIV p=program {Div::p} 
- | REM p=program {Rem::p}
- | EOF {[]}            
+ | INT pg=pgm {pg} (*INT for the number of arguments indicated at 
+ 					 the beginning of the input file*)
+
+pgm:
+ | PUSH n=INT p=pgm { (Push n)::p} 
+ | POP p=pgm { Pop::p }
+ | SWAP p=pgm { Swap::p }
+ | ADD p=pgm  { Add::p }
+ | SUB p=pgm {Sub::p}
+ | MUL p=pgm {Mul::p}
+ | DIV p=pgm {Div::p} 
+ | REM p=pgm {Rem::p}
+ | EOF {[]}
+        
 %%
 
