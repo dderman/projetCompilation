@@ -26,7 +26,7 @@ let compile file =
 
         try
             let ast = PfxParser.program PfxLexer.token lexbuf in
-            PfxAst.generate ast;
+            PfxAst.print_ast ast;
         with
         (* To tell the user where the error is, whenever an there is an error. *)
           | LexingII.Error(msg,loc) ->  Location.print loc ; 

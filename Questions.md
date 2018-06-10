@@ -318,3 +318,81 @@ let compile file =
 
 
 ## Exercise 6
+
+### question 6.1
+
+* La première étape consistait à se questionner sur la forme que devait prendre l'arbre de syntaxique abstrait pour PFX. 
+
+    * La première approche à laquelle nous avons pensé était de scinder les commandes en deux groupes : les commandes binaires (add, sub, ...), prenant deux entiers dans la pile, et les commandes unaires (pop uniquement). À ces commandes se serait ajoutée push qui ne rentre dans ni l'une ni l'autre des catégories. Selon le groupe auquel appartenait une commande, sa représentation dans l'ASA (ou AST en anglais) aurait changé. 
+    * Explicitons rapidement la représentation que nous envisagions avec un exemple. Prenons le programme pfx `0 push 2 push 7 push 3 add div`. 
+        En lisant le programme de droite à gauche, on aurait eu les étapes de construction suivantes :
+
+        ```
+        étape 1 :
+                div
+                / \
+               /   \
+        ```
+
+        ```
+        étape 2 :
+                    div
+                    / \
+                   /   \
+                  add
+                  / \
+                 /   \
+        ```
+
+        ```
+        étape 3 :
+                    div
+                    / \
+                   /   \
+                  add  push(3)
+                  / \
+                 /   \
+        ```
+
+        ```
+        étape 4 :
+                    div
+                    / \
+                   /   \
+                  add  push(3)
+                  / \
+                 /   \
+                     push(7)
+        ```
+
+        ```
+        étape 4 :
+                    div
+                    / \
+                   /   \
+                  add  push(3)
+                  / \
+                 /   \
+            push(2) push(7)
+        ```
+    * Cependant, après discussion avec un autre groupe, nous nous sommes aperçu que cette représentation relevait plus du langage EXPR. De plus, on se rend vite compte que son implémentation n'aurait pas été des plus aisée. Ceci est un autre argument permettant d'affirmer que cette représentation n'est pas la plus adaptée au langage pfx.
+        
+        Nous avons donc abandonné cette approche.
+
+* Suite à notre discussion avec l'autre groupe, et au vu des discussions menées sur le forum de l'UV, nous avons adopté une représentation plus linéaire : une liste. Un programme sera donc alors représenté par une simple liste de commandes. Voici donc le type programme tel que nous l'avons implémenté dans le pfxAst.ml :
+
+    ```
+    type command = 
+      | Push of int  | Pop | Rem | Add | Swap | Sub | Mul | Div ;;
+
+    type program = command list ;;
+    ```
+
+Notre implémentation du Parser peut enfin être trouvée dans le fichier correspondant.
+
+
+### question 6.2
+
+La fonction permettant l'affichage de l'ASA se trouve dans le fihier pfxAst.ml sous le nom de `print_ast`.
+
+Le fichier main.ml tel que modifié pour permettre de tester le parser est la version que l'on trouvera dans le répertoire actuel.

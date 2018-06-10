@@ -1,8 +1,5 @@
-(* Entry point of the program, should contain your main function: here it is
- named compile, it is the function provided after question 4.1 *)
-
 (*open PfxLexer ;;*)
- (* open PfxParser ;;  *)
+(* open PfxParser ;;  *)
 
 let compile file =
   print_string ("File "^file^" is being treated!\n");
@@ -18,7 +15,7 @@ let compile file =
     		  if tok = EOF then
     		  lexbuf.lex_eof_reached <- true ; 
     		with
-    			(* To tell the user where the error is, whenever an there is an error. *)
+    			(* To tell the user where the error is, whenever there is an error. *)
     		  | LexingII.Error(msg,loc) ->  Location.print loc ; 
 											print_string msg ;
 											lexbuf.lex_eof_reached <- true (*to end the process*)
@@ -26,9 +23,9 @@ let compile file =
 
         try
             let ast = PfxParser.program PfxLexer.token lexbuf in
-            PfxAst.generate ast;
+            PfxAst.print_ast ast;
         with
-        (* To tell the user where the error is, whenever an there is an error. *)
+        (* To tell the user where the error is, whenever there is an error. *)
           | LexingII.Error(msg,loc) ->  Location.print loc ; 
                                         print_string msg ;
                                         lexbuf.lex_eof_reached <- true; (*to end the process*)
@@ -37,13 +34,12 @@ let compile file =
   with Sys_error s ->
     print_endline ("Can't find file '" ^ file ^ "'");;
 
-(* The following line should be uncommented and adapted after question 5.1: *)
+
 let _ = Arg.parse [] compile "";;
 
 
 
-(*)
- *)
+
 
 
 		
