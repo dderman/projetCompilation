@@ -1,27 +1,24 @@
 AUTHORS
 -------
 
-- NAME1
-- NAME2 
-…
+- RIVOAL Samuel
+- DERMAN Diego
 
 ===============
 
 Description of the project
 --------------------------
 
-This μ-project is a very simple compiler…
+This μ-project is a very simple compiler of a stack-oriented programming language. It was made with educational purposes and written in OCaml with the help of two utils: ocamllex a lexer or scanner for OCaml and Menhir, which is a LR(1) parser generator for OCaml.
 
 ===============
 
 Sources
 -------
 
-Git repository: https://redmine-df.telecom-bretagne.eu/git/proectname/
+Git repository: https://github.com/dderman/projetCompilation/
 
-(obviously, you _will_ use a version control system such as Git, IMT Atlantique provides a project management platform: use it!)
-
-Release : tag 1.0 or commit acdeacdacdacdacd
+Release : commit 5801f6ea029696f3919574b5916776cf1b2d18a8
 
 ===============
 
@@ -30,15 +27,19 @@ How to…
 
 …retrieve the sources?
 
-  git clone https://redmine-df.telecom-bretagne.eu/git/proectname/
+  git clone https://github.com/dderman/projetCompilation/
 
 …compile?
 
-  ocamlbuild …
+  ocamlbuild main.*CODE*
 
 …execute and test?
 
-  ocamlbuild main.byte -- testfile.pfx
+  main.*CODE* tests/prog.pfx
+
+*CODE* = 'native' 
+*CODE* = 'byte' 
+**Where code can be either 'native' or 'byte' generating code whether by the native compiler or the bytecode compiler respectively. For more information head to: https://realworldocaml.org/v1/en/html/the-compiler-backend-byte-code-and-native-code.html  
 
 
 ===============
@@ -48,18 +49,28 @@ Structure of the project
 
 The project is organized as following:
 
-Explain here the organization of your project, what is the use of each file or
-group of files, etc. 
+The master folder contains both the compiler and its source coide (main), as well as the parser and lexer (also menhir and ocamllex files as well as their generated code), and this README file.
+The expressions folder contains the abstract syntax trees for the two most complex syntactic structures.
+The tests folder is quite self explanatory, contains examples as well as instructions to check their response appropriately.
+Finally, in the utils folder you can find the lexer utilities to find different tokens.
 
-You may also show the file tree as the following example (project_skeleton):
+file tree:
 
-project_skeleton
+projetCompilation
 ├── pfxAst.ml
 ├── pfxLexer.mll
-├── pfxMain.ml
 ├── pfxParser.mly
-├── README
+├── Questions.md
+├── main.ml
+├── main.byte
 ├── _tags
+├── README
+├── _build
+│   ├── ...
+│   └── ...
+├── expressions
+│   ├── basicExprAst.ml
+│   └── functionExprAst.ml
 ├── tests
 │   ├── ex_course1.pfx
 │   ├── ex_course.pfx
@@ -78,8 +89,11 @@ project_skeleton
 │   ├── README
 │   └── second.pfx
 └── utils
+    ├── a.out
     ├── lexingII.ml
-    ├── lexingII.mli
+    ├── lexingII.ml
+    ├── binOp.ml
+    ├── binOp.mli
     ├── location.ml
     └── location.mli
 
@@ -88,29 +102,23 @@ project_skeleton
 Progress
 --------
 
-- We stopped at question 10.1 (proof of derivation)
-- There is still a bug in question 8.3 (new version of generate function)
-- …
+- We stopped at 7.1
+- The parser (question 6.2) works correctly
 
 ===============
 
 Know bugs and issues
 --------------------
 
-- We were not able to manage xxx…
-- Compiler fails when xxx…
-- …
+- 
 
 ===============
 
 Helpful resources
 -----------------
 
-- we use Stack Overflow to solve the problem of xxx :
-  https://stackoverflow/xxxxxxi
-  https://stackoverflow/yyyyyy
-- someone on GitHub provided an interesting example very similar to the answer of the question x.y : https://github.com/xxxx
-- …
+- We used the OCaml guide provided by https://realworldocaml.org/ in multiple instances to solve many problems.
+- We used all of the resources made available by the professors to get a step-by-step idea of what we were supposed to do.
 
 ===============
 
@@ -120,7 +128,5 @@ Difficulties
 - team programming: having to use a VCS such as git and avoiding conflicts
 - thinking functional
 - changing habits by using an unknown language
-- Not a single difficulty: the project was so easy that my 8-old brother did it
-  completely; the Ocaml language is so nice I enjoyed the project, …
-- …
+- getting feedback from moodle's forum and not from face to face meetings was quite disorienting 
 
